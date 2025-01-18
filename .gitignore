@@ -1,0 +1,36 @@
+# Dart/Pub related files
+.dart_tool/
+.packages
+.pub/
+build/
+.idea/
+
+# Flutter specific files
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.metadata
+android/.gradle/
+android/app/build/
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.framework
+ios/ServiceDefinitions.json
+macos/Flutter/ephemeral/
+web/.dart_tool/
+web/.packages
+web/build/
+
+# VS Code related files
+.vscode/
+
+# IntelliJ related files
+.idea/
+*.iml
+
+# Other files
+*.log
+*.tmp
