@@ -12,7 +12,7 @@ class NoteLocalDataSource {
   }
 
   Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'note_app.db');
+    String path = join(await getDatabasesPath(), 'note_app_v1.db');
     return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
