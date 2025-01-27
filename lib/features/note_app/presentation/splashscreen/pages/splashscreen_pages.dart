@@ -18,7 +18,7 @@ class SplashScreen extends GetView<SplashScreenController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).indicatorColor,
                 ),
                 SizedBox(height: 20),
                 Text("Mengunduh Data..."),

@@ -23,6 +23,7 @@ class CustomTheme {
 
   static final darkTheme = ThemeData(
     primaryColor: Colors.black,
+    indicatorColor: Colors.white,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Colors.black,
     useMaterial3: true,
