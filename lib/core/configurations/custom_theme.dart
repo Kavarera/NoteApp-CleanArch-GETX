@@ -39,5 +39,12 @@ class CustomTheme {
         statusBarIconBrightness: Brightness.dark,
       ),
     ),
+    buttonTheme: ButtonThemeData(
+      buttonColor: Colors.white,
+      textTheme: ButtonTextTheme.primary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
   );
 }
