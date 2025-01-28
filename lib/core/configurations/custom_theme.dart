@@ -46,5 +46,9 @@ class CustomTheme {
         borderRadius: BorderRadius.circular(8),
       ),
     ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: Colors.white,
+      actionTextColor: Colors.black,
+    ),
   );
 }
