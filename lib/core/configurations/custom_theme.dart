@@ -50,5 +50,20 @@ class CustomTheme {
       backgroundColor: Colors.white,
       actionTextColor: Colors.black,
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor:
+            WidgetStateProperty.all(const Color.fromARGB(255, 42, 41, 41)),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(
+                color: const Color.fromARGB(255, 201, 200, 200), width: 2),
+          ),
+        ),
+        foregroundColor:
+            WidgetStateProperty.all(const Color.fromARGB(255, 201, 200, 200)),
+      ),
+    ),
   );
 }
