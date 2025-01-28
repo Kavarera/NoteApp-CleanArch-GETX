@@ -24,8 +24,20 @@ class HomePage extends GetView<HomeController> {
 
             //Category List
             Container(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
               height: MediaQuery.of(context).size.height * 0.1,
               color: Colors.red,
+              child: Obx(() => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.categories.length,
+                    itemBuilder: (context, index) {
+                      var c = controller.categories.elementAt(index);
+                      if (c.id == -1) {
+                        return ElevatedButton(
+                            onPressed: () {}, child: Text(c.name));
+                      }
+                    },
+                  )),
             ),
             Expanded(
               child: Container(
