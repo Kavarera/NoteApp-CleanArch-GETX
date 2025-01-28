@@ -10,6 +10,10 @@ class CategoryModel extends CategoryEntity {
     );
   }
 
+  CategoryEntity toEntity() {
+    return CategoryEntity(id: id, name: name);
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

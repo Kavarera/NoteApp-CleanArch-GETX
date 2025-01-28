@@ -11,10 +11,10 @@ class NoteRepositoryImpl implements NoteRepository {
   NoteRepositoryImpl({required this.localDataSource});
 
   @override
-  Future<Either<Failure, List<NoteModel>>> getNotes() async {
+  Future<Either<Failure, List<NoteEntity>>> getNotes() async {
     try {
       final notes = await localDataSource.getNotes();
-      return Right(notes);
+      return Right(notes.map((e) => e.toEntity()).toList());
     } catch (e) {
       return Left(CacheFailure(e.toString()));
     }

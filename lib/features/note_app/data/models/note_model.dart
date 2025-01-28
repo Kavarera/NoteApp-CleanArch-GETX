@@ -18,4 +18,8 @@ class NoteModel extends NoteEntity {
       'content': content,
     };
   }
+
+  NoteEntity toEntity() {
+    return NoteEntity(id: id, title: title, content: content);
+  }
 }

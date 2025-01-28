@@ -25,7 +25,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<Either<Failure, List<CategoryEntity>>> getCategories() async {
     try {
       final categories = await localDataSource.getCategories();
-      return Right(categories);
+      return Right(
+        categories.map((e) => e.toEntity()).toList(),
+      );
     } catch (e) {
       return Left(CacheFailure(e.toString()));
     }

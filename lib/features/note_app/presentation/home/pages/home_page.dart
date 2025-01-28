@@ -23,7 +23,10 @@ class HomePage extends GetView<HomeController> {
             CustomAppbar(controller: controller),
 
             //Category List
-
+            Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              color: Colors.red,
+            ),
             Expanded(
               child: Container(
                 child: Obx(
