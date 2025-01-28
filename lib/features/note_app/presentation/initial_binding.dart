@@ -29,8 +29,8 @@ class InitialBinding implements Bindings {
         () => GetAllCategoriesUseCase(categoryRepository: Get.find()));
 
     //Controllers
-    Get.lazyPut<HomeController>(
-        () => HomeController(getAllNotesUseCase: Get.find()));
+    Get.lazyPut<HomeController>(() => HomeController(
+        getAllNotesUseCase: Get.find(), getAllCategoriesUseCase: Get.find()));
     Get.lazyPut<SplashScreenController>(() => SplashScreenController());
   }
 }

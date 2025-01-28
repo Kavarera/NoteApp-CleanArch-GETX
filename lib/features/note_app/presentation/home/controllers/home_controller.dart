@@ -4,17 +4,21 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:noteapp/core/errors/failure.dart';
+import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 
 import '../../../domain/usecases/get_all_notes.dart';
 import '../../../domain/entities/note_entity.dart';
 
 class HomeController extends GetxController {
   final GetAllNotesUseCase getAllNotesUseCase;
+  final GetAllCategoriesUseCase getAllCategoriesUseCase;
 
   var notes = <NoteEntity>[].obs;
   var isGrid = true.obs;
 
-  HomeController({required this.getAllNotesUseCase});
+  HomeController(
+      {required this.getAllNotesUseCase,
+      required this.getAllCategoriesUseCase});
 
   @override
   void onReady() async {
