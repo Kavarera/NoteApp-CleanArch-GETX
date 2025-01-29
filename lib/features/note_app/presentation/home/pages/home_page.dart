@@ -11,7 +11,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: controller.newNote(),
+        onPressed: () => controller.newNote(),
         child: Icon(
           Icons.add,
           color: Colors.black,

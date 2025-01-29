@@ -11,10 +11,29 @@ class NoteDetailPage extends GetView<NoteDetailController> {
       appBar: AppBar(
         title: TextField(
           controller: controller.titleController,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+          ),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.w600,
+          ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () => controller.saveNote(),
+            icon: Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
-      body: Container(
-        child: Text("Hello World"),
+      body: SafeArea(
+        child: Center(
+          child: Text("Hello World"),
+        ),
       ),
     );
   }

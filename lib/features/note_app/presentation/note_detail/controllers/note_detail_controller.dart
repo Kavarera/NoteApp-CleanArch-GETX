@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
 class NoteDetailController extends GetxController {
   final RxString? title;
@@ -15,6 +16,8 @@ class NoteDetailController extends GetxController {
     activeContentController = TextEditingController();
     if (title != null) {
       titleController.text = title!.value;
+    } else {
+      titleController.text = "Untitled Note";
     }
   }
 
@@ -26,4 +29,8 @@ class NoteDetailController extends GetxController {
   }
 
   NoteDetailController({this.title, this.content});
+
+  void saveNote() {
+    Get.offAllNamed(AppRoutes.home);
+  }
 }

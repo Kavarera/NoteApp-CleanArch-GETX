@@ -7,6 +7,7 @@ import 'package:noteapp/core/errors/failure.dart';
 import 'package:noteapp/features/note_app/domain/entities/category_entity.dart';
 import 'package:noteapp/features/note_app/domain/usecases/add_new_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
+import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
 import '../../../domain/usecases/get_all_notes.dart';
 import '../../../domain/entities/note_entity.dart';
@@ -128,5 +129,7 @@ class HomeController extends GetxController {
     }
   }
 
-  newNote() {}
+  newNote() {
+    Get.offNamed(AppRoutes.noteDetail);
+  }
 }

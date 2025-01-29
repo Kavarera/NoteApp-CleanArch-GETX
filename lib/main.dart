@@ -18,7 +18,8 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.splashscreen,
+      home: SplashScreen(),
+      initialBinding: InitialBinding(),
       getPages: AppPages.pages,
       theme: CustomTheme.darkTheme,
     );
