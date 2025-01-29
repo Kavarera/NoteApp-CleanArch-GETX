@@ -66,6 +66,10 @@ class CustomTheme {
             WidgetStateProperty.all(const Color.fromARGB(255, 201, 200, 200)),
       ),
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+    ),
     fontFamily: GoogleFonts.comicNeue().fontFamily,
   );
 }

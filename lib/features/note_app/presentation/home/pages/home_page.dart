@@ -10,6 +10,13 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: controller.newNote(),
+        child: Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [

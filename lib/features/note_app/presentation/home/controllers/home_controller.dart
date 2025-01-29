@@ -127,4 +127,6 @@ class HomeController extends GetxController {
       );
     }
   }
+
+  newNote() {}
 }
