@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:noteapp/features/note_app/presentation/home/pages/home_page.dart';
+
+import '../../routes/app_routes.dart';
 
 class SplashScreenController extends GetxController {
   var isDataLoaded = false.obs;
@@ -23,6 +24,6 @@ class SplashScreenController extends GetxController {
       GoogleFonts.poppins(),
       GoogleFonts.comicNeue(),
     ]);
-    Get.offAll(HomePage());
+    Get.offAllNamed(AppRoutes.home);
   }
 }
