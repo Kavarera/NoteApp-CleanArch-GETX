@@ -4,6 +4,7 @@ import 'package:noteapp/features/note_app/data/repositories/category_repository_
 import 'package:noteapp/features/note_app/data/repositories/note_repository_impl.dart';
 import 'package:noteapp/features/note_app/domain/repositories/category_repository.dart';
 import 'package:noteapp/features/note_app/domain/repositories/note_repository.dart';
+import 'package:noteapp/features/note_app/domain/usecases/add_new_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_notes.dart';
 import 'package:noteapp/features/note_app/presentation/home/controllers/home_controller.dart';
@@ -27,10 +28,15 @@ class InitialBinding implements Bindings {
         () => GetAllNotesUseCase(noteRepository: Get.find()));
     Get.lazyPut<GetAllCategoriesUseCase>(
         () => GetAllCategoriesUseCase(categoryRepository: Get.find()));
+    Get.lazyPut<InsertCategoryUseCase>(
+        () => InsertCategoryUseCase(categoryRepository: Get.find()));
 
     //Controllers
     Get.lazyPut<HomeController>(() => HomeController(
-        getAllNotesUseCase: Get.find(), getAllCategoriesUseCase: Get.find()));
+          getAllNotesUseCase: Get.find(),
+          getAllCategoriesUseCase: Get.find(),
+          insertCategoryUseCase: Get.find(),
+        ));
     Get.lazyPut<SplashScreenController>(() => SplashScreenController());
   }
 }

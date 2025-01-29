@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTheme {
   static final lightTheme = ThemeData(
@@ -54,7 +55,7 @@ class CustomTheme {
       style: ButtonStyle(
         backgroundColor:
             WidgetStateProperty.all(const Color.fromARGB(255, 42, 41, 41)),
-        shape: WidgetStateProperty.all(
+        shape: WidgetStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
             side: BorderSide(
@@ -65,5 +66,6 @@ class CustomTheme {
             WidgetStateProperty.all(const Color.fromARGB(255, 201, 200, 200)),
       ),
     ),
+    fontFamily: GoogleFonts.comicNeue().fontFamily,
   );
 }

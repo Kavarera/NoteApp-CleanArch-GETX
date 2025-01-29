@@ -26,15 +26,68 @@ class HomePage extends GetView<HomeController> {
             Container(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
               height: MediaQuery.of(context).size.height * 0.1,
-              color: Colors.red,
-              child: Obx(() => ListView.builder(
+              child: Obx(() => ListView.separated(
+                    separatorBuilder: (context, index) => SizedBox(width: 10),
                     scrollDirection: Axis.horizontal,
                     itemCount: controller.categories.length,
                     itemBuilder: (context, index) {
                       var c = controller.categories.elementAt(index);
                       if (c.id == -1) {
                         return ElevatedButton(
-                            onPressed: () {}, child: Text(c.name));
+                          onPressed: () {
+                            controller.addCategory();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              side: BorderSide(color: Colors.white),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                c.name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return ElevatedButton(
+                          onPressed: () {
+                            controller.addCategory();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              side: BorderSide(color: Colors.white),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 30,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                c.name,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       }
                     },
                   )),

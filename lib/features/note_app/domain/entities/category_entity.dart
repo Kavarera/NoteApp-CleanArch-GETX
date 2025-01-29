@@ -1,6 +1,6 @@
 class CategoryEntity {
-  final int id;
+  final int? id;
   final String name;
 
-  CategoryEntity({required this.id, required this.name});
+  CategoryEntity({this.id, required this.name});
 }
