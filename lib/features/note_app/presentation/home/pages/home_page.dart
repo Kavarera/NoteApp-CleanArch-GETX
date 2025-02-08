@@ -105,7 +105,10 @@ class HomePage extends GetView<HomeController> {
                   () {
                     if (controller.notes.isEmpty) {
                       return Center(
-                        child: Text("No Notes"),
+                        child: Text(
+                          "No Notes",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
                       );
                     } else {
                       return ListView.builder(

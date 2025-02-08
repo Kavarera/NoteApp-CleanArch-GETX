@@ -40,6 +40,7 @@ class CustomAppbar extends StatelessWidget {
                 hintText: "Search note title",
                 border: InputBorder.none,
               ),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           IconButton(

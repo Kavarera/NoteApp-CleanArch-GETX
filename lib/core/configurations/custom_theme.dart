@@ -71,5 +71,9 @@ class CustomTheme {
       foregroundColor: Colors.black,
     ),
     fontFamily: GoogleFonts.comicNeue().fontFamily,
+    primaryTextTheme: GoogleFonts.comicNeueTextTheme().apply(
+      bodyColor: Colors.white,
+      displayColor: Colors.white,
+    ),
   );
 }
