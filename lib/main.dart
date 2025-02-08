@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteapp/core/configurations/custom_theme.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_pages.dart';
-import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 import 'package:noteapp/features/note_app/presentation/routes/initial_binding.dart';
 import 'package:noteapp/features/note_app/presentation/splashscreen/pages/splashscreen_pages.dart';
 

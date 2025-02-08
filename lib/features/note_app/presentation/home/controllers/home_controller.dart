@@ -130,6 +130,6 @@ class HomeController extends GetxController {
   }
 
   newNote() {
-    Get.offNamed(AppRoutes.noteDetail);
+    Get.offAllNamed(AppRoutes.noteDetail);
   }
 }

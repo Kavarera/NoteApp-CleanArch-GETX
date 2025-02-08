@@ -4,10 +4,6 @@ import 'package:noteapp/features/note_app/data/repositories/category_repository_
 import 'package:noteapp/features/note_app/data/repositories/note_repository_impl.dart';
 import 'package:noteapp/features/note_app/domain/repositories/category_repository.dart';
 import 'package:noteapp/features/note_app/domain/repositories/note_repository.dart';
-import 'package:noteapp/features/note_app/domain/usecases/add_new_category_usecase.dart';
-import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
-import 'package:noteapp/features/note_app/domain/usecases/get_all_notes.dart';
-import 'package:noteapp/features/note_app/presentation/home/controllers/home_controller.dart';
 import 'package:noteapp/features/note_app/presentation/splashscreen/controllers/splashscreen_controller.dart';
 
 class InitialBinding implements Bindings {
