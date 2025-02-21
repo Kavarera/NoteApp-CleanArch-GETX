@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noteapp/core/data/formatting_rules.dart';
+import 'package:noteapp/features/note_app/presentation/note_detail/controllers/custom_text_controller.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
 class NoteDetailController extends GetxController {
@@ -10,8 +12,10 @@ class NoteDetailController extends GetxController {
   var _editState = false.obs;
   late FocusNode _focusNode;
 
+  var isSelection = false.obs;
+
   late TextEditingController titleController;
-  late TextEditingController activeContentController;
+  late CustomTextController activeContentController;
 
   List<Map<String, dynamic>> textData = [];
 
@@ -21,10 +25,11 @@ class NoteDetailController extends GetxController {
   void onInit() {
     super.onInit();
     titleController = TextEditingController();
-    activeContentController = TextEditingController();
+    activeContentController =
+        CustomTextController(formattingRules: CustomFormattingRules.styles);
 
     titleController.text = title!.value;
-    titleController.addListener(titleControllerListener);
+    activeContentController.addListener(activeContentControllerListener);
   }
 
   @override
@@ -47,7 +52,6 @@ class NoteDetailController extends GetxController {
         log("Focus Node has focus");
       } else {
         log("Focus Node lost focus");
-        changeEditState();
       }
     });
   }
@@ -57,10 +61,6 @@ class NoteDetailController extends GetxController {
 
   void saveNote() {
     Get.offAllNamed(AppRoutes.home);
-  }
-
-  void titleControllerListener() {
-    log("Title: ${titleController.text}");
   }
 
   void popAction(bool didPop, Object? result) {
@@ -73,7 +73,18 @@ class NoteDetailController extends GetxController {
       _focusNode.requestFocus();
     } else {
       content!.value = activeContentController.text;
+      log("Going to do unfocus focusnode");
       _focusNode.unfocus();
+    }
+  }
+
+  void activeContentControllerListener() {
+    final selection = activeContentController.selection;
+
+    if (selection.baseOffset != selection.extentOffset) {
+      isSelection.value = true;
+    } else {
+      isSelection.value = false;
     }
   }
 }
