@@ -42,26 +42,22 @@ class CustomTextController extends TextEditingController {
       Get.log("Example Content: ${m.group(0)}");
 
       if (showTags) {
-        children.add(CustomTextSpan(
+        children.add(TextSpan(
           text: "[[$formatType]]",
           style: style,
-          isTag: true,
         ));
-        children.add(CustomTextSpan(
+        children.add(TextSpan(
           text: content,
           style: customStyle,
-          isTag: false,
         ));
-        children.add(CustomTextSpan(
+        children.add(TextSpan(
           text: "[[/$formatType]]",
           style: style,
-          isTag: true,
         ));
       } else {
-        children.add(CustomTextSpan(
+        children.add(TextSpan(
           text: content,
           style: customStyle,
-          isTag: false,
         ));
       }
       lastIndex = m.end;
