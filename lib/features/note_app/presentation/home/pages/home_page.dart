@@ -9,6 +9,7 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.log("HomePage Rendered");
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => controller.newNote(),

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteapp/core/dummy_data.dart';
 import 'package:noteapp/features/note_app/presentation/note_detail/controllers/note_detail_controller.dart';
 
 class NoteDetailPage extends GetView<NoteDetailController> {
@@ -57,42 +56,40 @@ class NoteDetailPage extends GetView<NoteDetailController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Obx(
-                  () => Visibility(
-                    visible: controller.isSelection.value,
-                    child: BottomAppBar(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
+                  () => Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                          onPressed: controller.isSelection.value
+                              ? () {
+                                  controller.applyFormat('b');
+                                }
+                              : null,
+                          icon: Icon(Icons.format_bold),
                         ),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.format_bold),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.format_italic),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.format_underline),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.format_list_bulleted),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.format_list_numbered),
-                            ),
-                          ],
+                        IconButton(
+                          onPressed: controller.isSelection.value
+                              ? () {
+                                  controller.applyFormat('i');
+                                }
+                              : null,
+                          icon: Icon(Icons.format_italic),
                         ),
-                      ),
+                        IconButton(
+                          onPressed: controller.isSelection.value
+                              ? () {
+                                  controller.applyFormat('u');
+                                }
+                              : null,
+                          icon: Icon(Icons.format_underline),
+                        ),
+                      ],
                     ),
                   ),
                 ),
+                SizedBox(height: 20),
                 Expanded(
                   child: Obx(
                     () {
@@ -115,12 +112,21 @@ class NoteDetailPage extends GetView<NoteDetailController> {
                           onTap: () {
                             controller.changeEditState();
                           },
-                          child: Text(
-                            controller.content!.value.isEmpty
-                                ? "Tap to add content"
-                                : controller.content!.value,
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
+                          child: controller.content!.value.isEmpty
+                              ? Text("Tap to add content",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium)
+                              : RichText(
+                                  text: controller.activeContentController
+                                      .buildTextSpan(
+                                    context: context,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                    withComposing: true,
+                                    showTags: false,
+                                  ),
+                                ),
                         );
                       }
                     },

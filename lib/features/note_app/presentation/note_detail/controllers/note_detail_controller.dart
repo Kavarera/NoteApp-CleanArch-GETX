@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteapp/core/data/formatting_rules.dart';
 import 'package:noteapp/features/note_app/presentation/note_detail/controllers/custom_text_controller.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
@@ -25,8 +24,7 @@ class NoteDetailController extends GetxController {
   void onInit() {
     super.onInit();
     titleController = TextEditingController();
-    activeContentController =
-        CustomTextController(formattingRules: CustomFormattingRules.styles);
+    activeContentController = CustomTextController();
 
     titleController.text = title!.value;
     activeContentController.addListener(activeContentControllerListener);
@@ -87,4 +85,6 @@ class NoteDetailController extends GetxController {
       isSelection.value = false;
     }
   }
+
+  applyFormat(String s) {}
 }

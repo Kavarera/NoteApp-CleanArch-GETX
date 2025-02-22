@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../../../core/data/custom_text_span.dart';
+import '../../../../../core/data/formatting_rules.dart';
 
 class CustomTextController extends TextEditingController {
-  final Map<String, TextStyle> formattingRules;
+  final Map<String, TextStyle> formattingRules = CustomFormattingRules.styles;
 
-  CustomTextController({required this.formattingRules, String? text})
-      : super(text: text);
+  CustomTextController({String? text}) : super(text: text);
 
   @override
   TextSpan buildTextSpan(
       {required BuildContext context,
       TextStyle? style,
-      required bool withComposing}) {
+      required bool withComposing,
+      bool showTags = true}) {
     final List<InlineSpan> children = [];
+
     final RegExp regExp =
-        RegExp(r'\[\[(.*?)\]\](.*?)\[\[\/\1\]\]', multiLine: true);
+        // r'\[\[(.*?)\]\](.*?)\[\[\/\1\]\]'
+        // r'\[\[(.*?)\]\](.*?)\[\[\1\]\]'
+        RegExp(r'\[\[(.*?)\]\](.*?)\[\[/\1\]\]', multiLine: true);
 
     String text = this.text;
     int lastIndex = 0;
-
+    // Get.log("Text custom TextController: $text");
+    // Get.log("matches custom TextController: ${regExp.allMatches(text)}");
     for (final Match m in regExp.allMatches(text)) {
+      Get.log("Match custom TextController: ${m.group(0)}");
       if (m.start > lastIndex) {
         children.add(TextSpan(
           text: text.substring(lastIndex, m.start),
@@ -30,12 +39,31 @@ class CustomTextController extends TextEditingController {
       String content = m.group(2)!;
 
       TextStyle? customStyle = formattingRules[formatType] ?? style;
+      Get.log("Example Content: ${m.group(0)}");
 
-      children.add(TextSpan(
-        text: content,
-        style: customStyle,
-      ));
-
+      if (showTags) {
+        children.add(CustomTextSpan(
+          text: "[[$formatType]]",
+          style: style,
+          isTag: true,
+        ));
+        children.add(CustomTextSpan(
+          text: content,
+          style: customStyle,
+          isTag: false,
+        ));
+        children.add(CustomTextSpan(
+          text: "[[/$formatType]]",
+          style: style,
+          isTag: true,
+        ));
+      } else {
+        children.add(CustomTextSpan(
+          text: content,
+          style: customStyle,
+          isTag: false,
+        ));
+      }
       lastIndex = m.end;
     }
 
