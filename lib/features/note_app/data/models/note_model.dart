@@ -13,7 +13,6 @@ class NoteModel extends NoteEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'title': title,
       'content': content,
     };

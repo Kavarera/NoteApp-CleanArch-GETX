@@ -23,11 +23,11 @@ class NoteRepositoryImpl implements NoteRepository {
   }
 
   @override
-  Future<Either<Failure, void>> insertNote(NoteEntity note) async {
+  Future<Either<Failure, bool>> insertNote(NoteEntity note) async {
     try {
-      await localDataSource.insertNote(
+      final id = await localDataSource.insertNote(
           NoteModel(id: note.id, title: note.title, content: note.content));
-      return Right(());
+      return Right(id > 0);
     } catch (e) {
       return Left(CacheFailure(e.toString()));
     }

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:noteapp/features/note_app/domain/usecases/add_new_category_usecase.dart';
+import 'package:noteapp/features/note_app/domain/usecases/add_new_note_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_notes.dart';
 import 'package:noteapp/features/note_app/presentation/home/controllers/home_controller.dart';
@@ -43,6 +44,10 @@ class AppPages {
       page: () => NoteDetailPage(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => NoteDetailController());
+
+        Get.lazyPut<InsertNoteUseCase>(() => InsertNoteUseCase(
+              Get.find(),
+            ));
       }),
     )
   ];

@@ -44,10 +44,12 @@ class NoteLocalDataSource {
     });
   }
 
-  Future<void> insertNote(NoteModel note) async {
+  Future<int> insertNote(NoteModel note) async {
     final db = await database;
-    await db!.insert('notes', note.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    return await db!.insert(
+      'notes',
+      note.toJson(),
+    );
   }
 
   Future<void> updateNote(NoteModel note) async {

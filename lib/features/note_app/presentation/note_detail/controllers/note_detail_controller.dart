@@ -2,8 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noteapp/core/errors/failure.dart';
 import 'package:noteapp/features/note_app/presentation/note_detail/controllers/custom_text_controller.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
+
+import '../../../domain/entities/note_entity.dart';
+import '../../../domain/usecases/add_new_note_usecase.dart';
 
 class NoteDetailController extends GetxController {
   RxString? title;
@@ -58,6 +62,19 @@ class NoteDetailController extends GetxController {
   }
 
   void saveNote() {
+    try {
+      Get.find<InsertNoteUseCase>()(NoteEntity(
+        id: 0,
+        title: titleController.text,
+        content: activeContentController.text,
+      ));
+      Get.log("NOTE SAVED");
+    } catch (e) {
+      if (e.runtimeType == CacheFailure) {
+        Get.snackbar("Error", "Failed to save note");
+      }
+    }
+
     Get.offAllNamed(AppRoutes.home);
   }
 
@@ -86,5 +103,33 @@ class NoteDetailController extends GetxController {
     }
   }
 
-  applyFormat(String s) {}
+  applyFormat(String s) {
+    if (!_focusNode.hasFocus) {
+      return;
+    }
+    if (isSelection.value == false) {
+      if (s == 'i') {
+        activeContentController.text += "[[i]][[/i]]";
+      }
+      if (s == 'b') {
+        activeContentController.text += "[[b]][[/b]]";
+      }
+      if (s == 'u') {
+        activeContentController.text += "[[u]][[/u]]";
+      }
+      activeContentController.selection = TextSelection.fromPosition(
+          TextPosition(
+              offset: activeContentController.selection.baseOffset - 6));
+    } else {
+      Get.log("Woe");
+      TextSelection sel = activeContentController.selection;
+      if (sel.baseOffset != sel.extentOffset) {
+        String curText = activeContentController.text
+            .substring(sel.baseOffset, sel.extentOffset);
+        activeContentController.text = activeContentController.text
+            .replaceRange(
+                sel.baseOffset, sel.extentOffset, "[[$s]]$curText[[/$s]]");
+      }
+    }
+  }
 }
