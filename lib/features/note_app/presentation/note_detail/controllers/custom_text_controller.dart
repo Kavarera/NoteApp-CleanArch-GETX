@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../core/data/custom_text_span.dart';
 import '../../../../../core/data/formatting_rules.dart';
 
 class CustomTextController extends TextEditingController {
   final Map<String, TextStyle> formattingRules = CustomFormattingRules.styles;
 
-  CustomTextController({String? text}) : super(text: text);
+  CustomTextController({super.text});
 
   @override
   TextSpan buildTextSpan(

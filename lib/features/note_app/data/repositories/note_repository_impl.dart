@@ -1,3 +1,5 @@
+// ignore_for_file: void_checks
+
 import 'package:dartz/dartz.dart';
 import 'package:noteapp/core/errors/failure.dart';
 import 'package:noteapp/features/note_app/data/datasource/note_local_data_source.dart';

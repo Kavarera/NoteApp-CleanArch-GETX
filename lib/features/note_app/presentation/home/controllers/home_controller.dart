@@ -23,7 +23,7 @@ class HomeController extends GetxController {
   var categories = <CategoryEntity>[].obs;
   var isGrid = true.obs;
 
-  TextEditingController _newCategoryController = TextEditingController();
+  final TextEditingController _newCategoryController = TextEditingController();
 
   HomeController({
     required this.getAllNotesUseCase,
@@ -59,7 +59,6 @@ class HomeController extends GetxController {
       },
       (data) {
         notes.value = data;
-        log(notes.value.runtimeType.toString());
       },
     );
   }
@@ -90,7 +89,7 @@ class HomeController extends GetxController {
     );
   }
 
-  void ChangeViewType() {
+  void changeViewType() {
     isGrid.value = !isGrid.value;
   }
 

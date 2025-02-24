@@ -56,7 +56,7 @@ class NoteDetailPage extends GetView<NoteDetailController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Obx(
-                  () => Container(
+                  () => SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

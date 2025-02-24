@@ -101,28 +101,26 @@ class HomePage extends GetView<HomeController> {
                   )),
             ),
             Expanded(
-              child: Container(
-                child: Obx(
-                  () {
-                    if (controller.notes.isEmpty) {
-                      return Center(
-                        child: Text(
-                          "No Notes",
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: controller.notes.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(controller.notes[index].title),
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
+              child: Obx(
+                () {
+                  if (controller.notes.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No Notes",
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.notes.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(controller.notes[index].title),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],

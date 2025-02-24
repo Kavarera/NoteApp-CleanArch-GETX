@@ -8,7 +8,7 @@ import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 class NoteDetailController extends GetxController {
   RxString? title;
   RxString? content;
-  var _editState = false.obs;
+  final _editState = false.obs;
   late FocusNode _focusNode;
 
   var isSelection = false.obs;

@@ -44,7 +44,7 @@ class CustomAppbar extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () => controller.ChangeViewType(),
+            onPressed: () => controller.changeViewType(),
             icon: Obx(
               () => Icon(
                 controller.isGrid.value ? Icons.grid_view : Icons.list,
