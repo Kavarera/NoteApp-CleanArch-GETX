@@ -3,6 +3,7 @@ import 'package:noteapp/features/note_app/domain/usecases/add_new_category_useca
 import 'package:noteapp/features/note_app/domain/usecases/add_new_note_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_notes.dart';
+import 'package:noteapp/features/note_app/domain/usecases/update_note_usecase.dart';
 import 'package:noteapp/features/note_app/presentation/home/controllers/home_controller.dart';
 import 'package:noteapp/features/note_app/presentation/home/pages/home_page.dart';
 import 'package:noteapp/features/note_app/presentation/note_detail/controllers/note_detail_controller.dart';
@@ -47,6 +48,9 @@ class AppPages {
 
         Get.lazyPut<InsertNoteUseCase>(() => InsertNoteUseCase(
               Get.find(),
+            ));
+        Get.lazyPut<UpdateNoteUsecase>(() => UpdateNoteUsecase(
+              noteRepository: Get.find(),
             ));
       }),
     )

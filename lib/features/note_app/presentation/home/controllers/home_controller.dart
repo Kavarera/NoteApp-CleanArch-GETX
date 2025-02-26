@@ -132,4 +132,8 @@ class HomeController extends GetxController {
   newNote() {
     Get.offAllNamed(AppRoutes.noteDetail);
   }
+
+  editNote(int index) {
+    Get.offAllNamed(AppRoutes.noteDetail, arguments: notes.elementAt(index));
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteapp/core/errors/failure.dart';
 import 'package:noteapp/features/note_app/domain/repositories/note_repository.dart';
+import 'package:noteapp/features/note_app/domain/usecases/update_note_usecase.dart';
 import 'package:noteapp/features/note_app/presentation/note_detail/controllers/custom_text_controller.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
@@ -30,6 +31,13 @@ class NoteDetailController extends GetxController {
     super.onInit();
     titleController = TextEditingController();
     activeContentController = CustomTextController();
+    //check for args
+    var args = Get.arguments as NoteEntity?;
+    if (args != null) {
+      title = args.title.obs;
+      content = args.content.obs;
+      activeContentController.text = args.content;
+    }
 
     titleController.text = title!.value;
     activeContentController.addListener(activeContentControllerListener);
@@ -73,6 +81,8 @@ class NoteDetailController extends GetxController {
       );
       if (noteId == 0) {
         await useCase(noteEntity);
+      } else {
+        await Get.find<UpdateNoteUsecase>()(noteEntity);
       }
     } catch (e) {
       Get.offAllNamed(AppRoutes.home, arguments: false);

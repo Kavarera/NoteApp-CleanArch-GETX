@@ -115,6 +115,9 @@ class HomePage extends GetView<HomeController> {
                       itemCount: controller.notes.length,
                       itemBuilder: (context, index) {
                         return ListTile(
+                          onTap: () {
+                            controller.editNote(index);
+                          },
                           title: Text(controller.notes[index].title),
                         );
                       },
