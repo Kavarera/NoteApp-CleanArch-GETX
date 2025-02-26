@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:noteapp/features/note_app/domain/usecases/add_new_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/add_new_note_usecase.dart';
+import 'package:noteapp/features/note_app/domain/usecases/delete_category_usecase.dart';
+import 'package:noteapp/features/note_app/domain/usecases/delete_note_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/get_all_notes.dart';
 import 'package:noteapp/features/note_app/domain/usecases/update_note_usecase.dart';
@@ -32,6 +34,18 @@ class AppPages {
             categoryRepository: Get.find(),
           ),
         );
+        Get.lazyPut<DeleteNoteUsecase>(
+          () => DeleteNoteUsecase(
+            noteRepository: Get.find(),
+          ),
+        );
+
+        Get.lazyPut<DeleteCategoryUsecase>(
+          () => DeleteCategoryUsecase(
+            categoryRepository: Get.find(),
+          ),
+        );
+
         //Controller
         Get.lazyPut(() => HomeController(
               getAllNotesUseCase: Get.find(),

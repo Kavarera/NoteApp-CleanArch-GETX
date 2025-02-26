@@ -9,6 +9,8 @@ import 'package:noteapp/features/note_app/domain/usecases/add_new_category_useca
 import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
+import '../../../domain/usecases/delete_category_usecase.dart';
+import '../../../domain/usecases/delete_note_usecase.dart';
 import '../../../domain/usecases/get_all_notes.dart';
 import '../../../domain/entities/note_entity.dart';
 import '../widgets/new_category_dialog_widget.dart';
@@ -135,5 +137,36 @@ class HomeController extends GetxController {
 
   editNote(int index) {
     Get.offAllNamed(AppRoutes.noteDetail, arguments: notes.elementAt(index));
+  }
+
+  void removeNote(int index) async {
+    try {
+      await Get.find<DeleteNoteUsecase>()(notes.elementAt(index).id);
+      notes.removeAt(index);
+    } catch (e) {
+      _showErrorSnackbar("Failed to remove data");
+    }
+  }
+
+  void removeCategory(int? id) async {
+    try {
+      await Get.find<DeleteCategoryUsecase>()(id!);
+      categories.removeWhere((element) => element.id == id);
+    } catch (e) {
+      _showErrorSnackbar("Failed to remove category");
+    }
+  }
+
+  void _showErrorSnackbar(String message) {
+    Get.snackbar(
+      "Error",
+      "Failed to delete note",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+      borderColor: Colors.red,
+      borderRadius: 0,
+      margin: const EdgeInsets.only(bottom: 20),
+    );
   }
 }

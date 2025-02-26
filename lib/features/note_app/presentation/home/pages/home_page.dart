@@ -71,29 +71,31 @@ class HomePage extends GetView<HomeController> {
                           ),
                         );
                       } else {
-                        return ElevatedButton(
-                          onPressed: () {
-                            controller.addCategory();
+                        return Dismissible(
+                          key: Key(c.id.toString()),
+                          direction: DismissDirection.up,
+                          onDismissed: (_) {
+                            controller.removeCategory(c.id);
                           },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              side: BorderSide(color: Colors.white),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 30,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                c.name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
+                          child: InkWell(
+                            onTap: () {
+                              Get.log("Category ${c.name} Clicked");
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 5,
                               ),
-                            ],
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                    color: Colors.white,
+                                    width: 1,
+                                    style: BorderStyle.solid),
+                              ),
+                              child: Text(c.name),
+                            ),
                           ),
                         );
                       }
@@ -114,12 +116,28 @@ class HomePage extends GetView<HomeController> {
                     return ListView.builder(
                       itemCount: controller.notes.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          onTap: () {
-                            controller.editNote(index);
-                          },
-                          title: Text(controller.notes[index].title),
-                        );
+                        return Dismissible(
+                            onDismissed: (_) {
+                              controller.removeNote(index);
+                            },
+                            direction: DismissDirection.startToEnd,
+                            key: Key(controller.notes
+                                .elementAt(index)
+                                .id
+                                .toString()),
+                            background: Container(
+                              color: Colors.red,
+                              alignment: Alignment.centerLeft,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Icon(Icons.delete, color: Colors.white),
+                            ),
+                            child: ListTile(
+                              onTap: () {
+                                controller.editNote(index);
+                              },
+                              title: Text(controller.notes[index].title),
+                            ));
                       },
                     );
                   }
