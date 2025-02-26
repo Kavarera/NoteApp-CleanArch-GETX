@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteapp/core/errors/failure.dart';
+import 'package:noteapp/features/note_app/domain/repositories/note_repository.dart';
 import 'package:noteapp/features/note_app/presentation/note_detail/controllers/custom_text_controller.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
@@ -61,20 +62,21 @@ class NoteDetailController extends GetxController {
     return _focusNode;
   }
 
-  void saveNote() {
+  void saveNote() async {
     try {
-      Get.find<InsertNoteUseCase>()(NoteEntity(
-        id: 0,
+      final useCase = Get.find<InsertNoteUseCase>();
+      final noteId = Get.arguments?.id ?? 0;
+      final noteEntity = NoteEntity(
+        id: noteId,
         title: titleController.text,
-        content: activeContentController.text,
-      ));
-      Get.log("NOTE SAVED");
-    } catch (e) {
-      if (e.runtimeType == CacheFailure) {
-        Get.snackbar("Error", "Failed to save note");
+        content: content?.value ?? "",
+      );
+      if (noteId == 0) {
+        await useCase(noteEntity);
       }
+    } catch (e) {
+      Get.offAllNamed(AppRoutes.home, arguments: false);
     }
-
     Get.offAllNamed(AppRoutes.home);
   }
 

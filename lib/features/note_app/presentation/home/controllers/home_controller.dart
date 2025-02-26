@@ -59,6 +59,7 @@ class HomeController extends GetxController {
       },
       (data) {
         notes.value = data;
+        data.forEach((e) => Get.log("Data Id Note = ${e.id}"));
       },
     );
   }
