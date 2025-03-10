@@ -61,7 +61,8 @@ class HomeController extends GetxController {
       },
       (data) {
         notes.value = data;
-        data.forEach((e) => Get.log("Data Id Note = ${e.id}"));
+        data.forEach((e) => Get.log(
+            "Note Category = ${e.category?.name} Data title = ${e.title}"));
       },
     );
   }
@@ -69,25 +70,18 @@ class HomeController extends GetxController {
   void _getAllCategories(Either<Failure, List<CategoryEntity>> c) {
     c.fold(
       (failure) {
-        Get.snackbar(
-          "Error",
-          failure.message,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-          colorText: Get.theme.snackBarTheme.actionTextColor,
-        );
+        _showErrorSnackbar("Failed to load categories");
         log("${failure.message} Error: ${failure.runtimeType}");
       },
       (c) {
         categories.clear();
+        if (c.isNotEmpty) {
+          categories.add(CategoryEntity(id: -2, name: "All"));
+        }
         for (var category in c) {
-          log(" c=  ${category.name}- ${category.id}");
           categories.add(category);
         }
         categories.add(CategoryEntity(id: -1, name: "Add Category"));
-        for (var category in categories) {
-          log("Category: ${category.name}- ${category.id}");
-        }
       },
     );
   }
@@ -112,14 +106,7 @@ class HomeController extends GetxController {
       );
       data.fold(
         (failure) {
-          Get.snackbar(
-            "Error",
-            failure.message,
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-            colorText: Get.theme.snackBarTheme.actionTextColor,
-          );
-          log("${failure.message} Error: ${failure.runtimeType}");
+          _showErrorSnackbar("Failed to add category");
         },
         (data) async {
           Get.back();

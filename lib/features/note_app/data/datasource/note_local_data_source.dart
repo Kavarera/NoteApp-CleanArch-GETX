@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:noteapp/features/note_app/data/models/category_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -30,7 +32,7 @@ class NoteLocalDataSource {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
         content TEXT,
-        categoryId INTEGER,
+        categoryId INTEGER NULL,
         FOREIGN KEY (categoryId) REFERENCES categories(id)
       )
     ''');
@@ -38,8 +40,14 @@ class NoteLocalDataSource {
 
   Future<List<NoteModel>> getNotes() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db!.query('notes');
+
+    final List<Map<String, dynamic>> maps = await db!.rawQuery('''
+  SELECT notes.*, categories.name as category_name 
+  FROM notes 
+  LEFT JOIN categories ON notes.categoryId = categories.id
+''');
     return List.generate(maps.length, (i) {
+      log("[LOCAL-DATA-SOURCE:GETNOTES] RAW:${maps[i]}\n Notes Category : ${maps[i]['categoryName']}-${maps[i]['categoryId']}");
       return NoteModel.fromJson(maps[i]);
     });
   }
@@ -49,11 +57,14 @@ class NoteLocalDataSource {
     return await db!.insert(
       'notes',
       note.toJson(),
+      // conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
   Future<void> updateNote(NoteModel note) async {
     final db = await database;
+    log("${note.category?.name} - ${note.category?.id}",
+        name: "LOCAL-DATA-SOURCE:UPDATE-NOTE");
     await db!
         .update('notes', note.toJson(), where: 'id = ?', whereArgs: [note.id]);
   }

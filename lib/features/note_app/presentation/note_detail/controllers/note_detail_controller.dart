@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteapp/core/errors/failure.dart';
-import 'package:noteapp/features/note_app/domain/repositories/note_repository.dart';
+import 'package:noteapp/features/note_app/domain/entities/category_entity.dart';
+import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 import 'package:noteapp/features/note_app/domain/usecases/update_note_usecase.dart';
 import 'package:noteapp/features/note_app/presentation/note_detail/controllers/custom_text_controller.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
@@ -16,6 +16,8 @@ class NoteDetailController extends GetxController {
   RxString? content;
   final _editState = false.obs;
   late FocusNode _focusNode;
+  final categories = <CategoryEntity>[].obs;
+  final Rx<CategoryEntity?> selectedCategory = Rx<CategoryEntity?>(null);
 
   var isSelection = false.obs;
 
@@ -37,10 +39,13 @@ class NoteDetailController extends GetxController {
       title = args.title.obs;
       content = args.content.obs;
       activeContentController.text = args.content;
+      selectedCategory.value = args.category;
     }
 
     titleController.text = title!.value;
     activeContentController.addListener(activeContentControllerListener);
+
+    _getCategories();
   }
 
   @override
@@ -58,13 +63,13 @@ class NoteDetailController extends GetxController {
     if (content == null) {
       this.content = "".obs;
     }
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        log("Focus Node has focus");
-      } else {
-        log("Focus Node lost focus");
-      }
-    });
+    // _focusNode.addListener(() {
+    //   if (_focusNode.hasFocus) {
+    //     log("Focus Node has focus");
+    //   } else {
+    //     log("Focus Node lost focus");
+    //   }
+    // });
   }
   FocusNode getFocusNode() {
     return _focusNode;
@@ -74,15 +79,26 @@ class NoteDetailController extends GetxController {
     try {
       final useCase = Get.find<InsertNoteUseCase>();
       final noteId = Get.arguments?.id ?? 0;
+      final category = selectedCategory.value;
+      Get.log("Category: $category");
       final noteEntity = NoteEntity(
         id: noteId,
         title: titleController.text,
         content: content?.value ?? "",
+        category: category,
       );
+      Get.log(
+          "Note Entity: $noteEntity, NE Category: ${noteEntity.category?.name}");
       if (noteId == 0) {
         await useCase(noteEntity);
+        Get.log("Created new note");
       } else {
         await Get.find<UpdateNoteUsecase>()(noteEntity);
+        Get.log("Saved note");
+        Get.log("""Note Category = ${noteEntity.category?.name}\n
+            Data title = ${noteEntity.title}
+            Note Category ID = ${noteEntity.category?.id}
+            """);
       }
     } catch (e) {
       Get.offAllNamed(AppRoutes.home, arguments: false);
@@ -100,7 +116,6 @@ class NoteDetailController extends GetxController {
       _focusNode.requestFocus();
     } else {
       content!.value = activeContentController.text;
-      log("Going to do unfocus focusnode");
       _focusNode.unfocus();
     }
   }
@@ -133,7 +148,6 @@ class NoteDetailController extends GetxController {
           TextPosition(
               offset: activeContentController.selection.baseOffset - 6));
     } else {
-      Get.log("Woe");
       TextSelection sel = activeContentController.selection;
       if (sel.baseOffset != sel.extentOffset) {
         String curText = activeContentController.text
@@ -143,5 +157,25 @@ class NoteDetailController extends GetxController {
                 sel.baseOffset, sel.extentOffset, "[[$s]]$curText[[/$s]]");
       }
     }
+  }
+
+  void _getCategories() async {
+    final data = await Get.find<GetAllCategoriesUseCase>()();
+    data.fold(
+      (failure) {
+        Get.snackbar("Error", "Failed to get categories");
+      },
+      (data) {
+        categories.assignAll(data);
+      },
+    );
+  }
+
+  void changeSelectedCategory(int index) {
+    selectedCategory.value = categories.where((e) => e.id == index).firstOrNull;
+  }
+
+  void clearSelectedCategory() {
+    selectedCategory.value = null;
   }
 }

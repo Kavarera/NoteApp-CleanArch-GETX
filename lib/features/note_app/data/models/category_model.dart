@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:noteapp/features/note_app/domain/entities/category_entity.dart';
 
 class CategoryModel extends CategoryEntity {
@@ -12,6 +14,12 @@ class CategoryModel extends CategoryEntity {
 
   CategoryEntity toEntity() {
     return CategoryEntity(id: id, name: name);
+  }
+
+  factory CategoryModel.fromEntity(CategoryEntity entity) {
+    log("CategoryModel.fromEntity: ${entity.id} - ${entity.name}",
+        name: "CategoryModel:fromEntity");
+    return CategoryModel(id: entity.id, name: entity.name);
   }
 
   Map<String, dynamic> toJson() {

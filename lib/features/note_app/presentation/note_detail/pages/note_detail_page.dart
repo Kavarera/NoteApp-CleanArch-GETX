@@ -46,6 +46,61 @@ class NoteDetailPage extends GetView<NoteDetailController> {
             ),
           ],
         ),
+        bottomNavigationBar: Container(
+          child: PopupMenuButton(
+            elevation: 20,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            color: Colors.white,
+            menuPadding: const EdgeInsets.symmetric(vertical: 5),
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+            ),
+            position: PopupMenuPosition.over,
+            onSelected: (int index) {
+              // Tindakan saat opsi dipilih
+              controller.changeSelectedCategory(index);
+            },
+            itemBuilder: (BuildContext context) {
+              return controller.categories.map((c) {
+                return PopupMenuItem(
+                  value: c.id,
+                  child: Text(c.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .apply(color: Colors.black)),
+                );
+              }).toList();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Obx(
+                () => Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            controller.selectedCategory.value == null
+                                ? Text("Select Category")
+                                : Text(controller.selectedCategory.value!.name),
+                            Icon(Icons.arrow_drop_up),
+                          ]),
+                    ),
+                    SizedBox(width: 20),
+                    InkWell(
+                        onTap: () {
+                          controller.clearSelectedCategory();
+                        },
+                        child: Icon(Icons.block)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(
@@ -86,9 +141,6 @@ class NoteDetailPage extends GetView<NoteDetailController> {
                   child: SingleChildScrollView(
                     child: Obx(
                       () {
-                        log("UI: ${controller.content}");
-                        log("UI: ${controller.getEditState}");
-
                         if (controller.getEditState) {
                           return TextField(
                             maxLines: null,
