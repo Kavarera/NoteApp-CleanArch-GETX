@@ -47,7 +47,6 @@ class NoteLocalDataSource {
   LEFT JOIN categories ON notes.categoryId = categories.id
 ''');
     return List.generate(maps.length, (i) {
-      log("[LOCAL-DATA-SOURCE:GETNOTES] RAW:${maps[i]}\n Notes Category : ${maps[i]['categoryName']}-${maps[i]['categoryId']}");
       return NoteModel.fromJson(maps[i]);
     });
   }

@@ -63,13 +63,6 @@ class NoteDetailController extends GetxController {
     if (content == null) {
       this.content = "".obs;
     }
-    // _focusNode.addListener(() {
-    //   if (_focusNode.hasFocus) {
-    //     log("Focus Node has focus");
-    //   } else {
-    //     log("Focus Node lost focus");
-    //   }
-    // });
   }
   FocusNode getFocusNode() {
     return _focusNode;

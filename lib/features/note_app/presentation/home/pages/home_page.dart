@@ -79,7 +79,11 @@ class HomePage extends GetView<HomeController> {
                           },
                           child: InkWell(
                             onTap: () {
-                              Get.log("Category ${c.name} Clicked");
+                              if (c.id == -2) {
+                                controller.resetNotes();
+                              } else {
+                                controller.filterCategories(c.id);
+                              }
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(
@@ -137,6 +141,8 @@ class HomePage extends GetView<HomeController> {
                                 controller.editNote(index);
                               },
                               title: Text(controller.notes[index].title),
+                              subtitle: Text(
+                                  controller.notes[index].category?.name ?? ''),
                             ));
                       },
                     );

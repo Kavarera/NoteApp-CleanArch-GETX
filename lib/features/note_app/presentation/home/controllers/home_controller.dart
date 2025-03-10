@@ -57,12 +57,9 @@ class HomeController extends GetxController {
           backgroundColor: Get.theme.snackBarTheme.backgroundColor,
           colorText: Get.theme.snackBarTheme.actionTextColor,
         );
-        log("${failure.message} Error: ${failure.runtimeType}");
       },
       (data) {
         notes.value = data;
-        data.forEach((e) => Get.log(
-            "Note Category = ${e.category?.name} Data title = ${e.title}"));
       },
     );
   }
@@ -71,7 +68,6 @@ class HomeController extends GetxController {
     c.fold(
       (failure) {
         _showErrorSnackbar("Failed to load categories");
-        log("${failure.message} Error: ${failure.runtimeType}");
       },
       (c) {
         categories.clear();
@@ -155,5 +151,21 @@ class HomeController extends GetxController {
       borderRadius: 0,
       margin: const EdgeInsets.only(bottom: 20),
     );
+  }
+
+  void filterCategories(int? id) async {
+    if (id == null) return;
+    if (id > 0) {
+      await resetNotes();
+      log("id = $id");
+      final filter = notes.where((e) => e.category?.id == id).toList();
+      notes.assignAll(filter);
+    }
+  }
+
+  Future<void> resetNotes() async {
+    log("diklik");
+    final data = await getAllNotesUseCase.call();
+    _getAllNotes(data);
   }
 }
