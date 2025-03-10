@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -117,35 +119,104 @@ class HomePage extends GetView<HomeController> {
                       ),
                     );
                   } else {
-                    return ListView.builder(
-                      itemCount: controller.notes.length,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                            onDismissed: (_) {
-                              controller.removeNote(index);
-                            },
-                            direction: DismissDirection.startToEnd,
+                    if (controller.isGrid.value) {
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // 2 kolom
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                          childAspectRatio:
+                              0.8, // Ratio standar, nanti diubah per item
+                        ),
+                        itemCount: controller.notes.length,
+                        itemBuilder: (context, index) {
+                          final note = controller.notes[index];
+
+                          return Dismissible(
                             key: Key(controller.notes
                                 .elementAt(index)
                                 .id
                                 .toString()),
-                            background: Container(
-                              color: Colors.red,
-                              alignment: Alignment.centerLeft,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Icon(Icons.delete, color: Colors.white),
+                            onDismissed: (_) {
+                              controller.removeNote(index);
+                            },
+                            direction: DismissDirection.down,
+                            child: GestureDetector(
+                              onTap: () => controller.editNote(index),
+                              child: Container(
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.primaries[
+                                      index % Colors.primaries.length],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(note.category?.name ?? '',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white70)),
+                                    SizedBox(height: 8),
+                                    Text(note.title,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)),
+                                    SizedBox(height: 4),
+                                    RichText(
+                                      text: controller.buildTextSpan(
+                                          note.content, context),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 7,
+                                    )
+
+                                    // Text(
+                                    //   note.content,
+                                    //   style: TextStyle(
+                                    //       fontSize: 16, color: Colors.white),
+                                    //   overflow: TextOverflow.ellipsis,
+                                    //   maxLines: 6,
+                                    // ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            child: ListTile(
-                              onTap: () {
-                                controller.editNote(index);
+                          );
+                        },
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: controller.notes.length,
+                        itemBuilder: (context, index) {
+                          return Dismissible(
+                              onDismissed: (_) {
+                                controller.removeNote(index);
                               },
-                              title: Text(controller.notes[index].title),
-                              subtitle: Text(
-                                  controller.notes[index].category?.name ?? ''),
-                            ));
-                      },
-                    );
+                              direction: DismissDirection.startToEnd,
+                              key: Key(controller.notes
+                                  .elementAt(index)
+                                  .id
+                                  .toString()),
+                              background: Container(
+                                color: Colors.red,
+                                alignment: Alignment.centerLeft,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Icon(Icons.delete, color: Colors.white),
+                              ),
+                              child: ListTile(
+                                onTap: () {
+                                  controller.editNote(index);
+                                },
+                                title: Text(controller.notes[index].title),
+                                subtitle: Text(
+                                    controller.notes[index].category?.name ??
+                                        ''),
+                              ));
+                        },
+                      );
+                    }
                   }
                 },
               ),

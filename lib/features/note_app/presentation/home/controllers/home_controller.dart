@@ -9,6 +9,7 @@ import 'package:noteapp/features/note_app/domain/usecases/add_new_category_useca
 import 'package:noteapp/features/note_app/domain/usecases/get_all_category_usecase.dart';
 import 'package:noteapp/features/note_app/presentation/routes/app_routes.dart';
 
+import '../../../../../core/data/formatting_rules.dart';
 import '../../../domain/usecases/delete_category_usecase.dart';
 import '../../../domain/usecases/delete_note_usecase.dart';
 import '../../../domain/usecases/get_all_notes.dart';
@@ -161,6 +162,42 @@ class HomeController extends GetxController {
       final filter = notes.where((e) => e.category?.id == id).toList();
       notes.assignAll(filter);
     }
+  }
+
+  TextSpan buildTextSpan(String text, BuildContext context) {
+    final Map<String, TextStyle> formattingRules = CustomFormattingRules.styles;
+    final List<InlineSpan> children = [];
+    final RegExp regExp =
+        RegExp(r'\[\[(.*?)\]\](.*?)\[\[/\1\]\]', multiLine: true);
+    int lastIndex = 0;
+
+    for (final Match match in regExp.allMatches(text)) {
+      if (match.start > lastIndex) {
+        children.add(TextSpan(
+          text: text.substring(lastIndex, match.start),
+          style: DefaultTextStyle.of(context).style,
+        ));
+      }
+      String formatType = match.group(1)!;
+      String content = match.group(2)!;
+      TextStyle? customStyle =
+          formattingRules[formatType] ?? DefaultTextStyle.of(context).style;
+
+      children.add(TextSpan(
+        text: content,
+        style: customStyle,
+      ));
+      lastIndex = match.end;
+    }
+
+    if (lastIndex < text.length) {
+      children.add(TextSpan(
+        text: text.substring(lastIndex),
+        style: DefaultTextStyle.of(context).style,
+      ));
+    }
+
+    return TextSpan(children: children);
   }
 
   Future<void> resetNotes() async {
