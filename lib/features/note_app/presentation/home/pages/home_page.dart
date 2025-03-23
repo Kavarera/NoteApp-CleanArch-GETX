@@ -70,6 +70,28 @@ class HomePage extends GetView<HomeController> {
                           ),
                         );
                       } else {
+                        if (c.id == -2) {
+                          return InkWell(
+                            onTap: () {
+                              controller.resetNotes();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 5,
+                              ),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                    color: Colors.white,
+                                    width: 1,
+                                    style: BorderStyle.solid),
+                              ),
+                              child: Text(c.name),
+                            ),
+                          );
+                        }
                         return Dismissible(
                           key: Key(c.id.toString()),
                           direction: DismissDirection.up,
@@ -78,11 +100,7 @@ class HomePage extends GetView<HomeController> {
                           },
                           child: InkWell(
                             onTap: () {
-                              if (c.id == -2) {
-                                controller.resetNotes();
-                              } else {
-                                controller.filterCategories(c.id);
-                              }
+                              controller.filterCategories(c.id);
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(

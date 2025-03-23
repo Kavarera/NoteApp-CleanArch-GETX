@@ -201,8 +201,17 @@ class HomeController extends GetxController {
   }
 
   Future<void> resetNotes() async {
-    log("diklik");
     final data = await getAllNotesUseCase.call();
     _getAllNotes(data);
+  }
+
+  void searchNotes(String value) async {
+    await resetNotes();
+    if (value.isNotEmpty) {
+      final filter = notes
+          .where((e) => e.title.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+      notes.assignAll(filter);
+    }
   }
 }

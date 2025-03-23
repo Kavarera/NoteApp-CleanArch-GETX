@@ -36,6 +36,9 @@ class CustomAppbar extends StatelessWidget {
           ),
           Expanded(
             child: TextField(
+              onChanged: (value) {
+                controller.searchNotes(value);
+              },
               decoration: InputDecoration(
                 hintText: "Search note title",
                 border: InputBorder.none,
