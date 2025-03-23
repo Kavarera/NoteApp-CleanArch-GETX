@@ -1,0 +1,2 @@
+D:/Programming/Dart/Tugas Akhir/Getx/noteapp/android/app/.cxx/RelWithDebInfo/2sa0514j/x86_64/CMakeFiles/edit_cache.dir
+D:/Programming/Dart/Tugas Akhir/Getx/noteapp/android/app/.cxx/RelWithDebInfo/2sa0514j/x86_64/CMakeFiles/rebuild_cache.dir

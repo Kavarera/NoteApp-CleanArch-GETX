@@ -11,8 +11,6 @@ class GetAllNotesUseCase {
   GetAllNotesUseCase({required this.noteRepository});
 
   Future<Either<Failure, List<NoteEntity>>> call() async {
-    var data = await noteRepository.getNotes();
-    log("GEtAllNotesUseCase: ${data.runtimeType.toString()}");
     return await noteRepository.getNotes();
   }
 }

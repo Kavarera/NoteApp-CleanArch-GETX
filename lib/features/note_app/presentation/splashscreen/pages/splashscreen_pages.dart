@@ -22,6 +22,10 @@ class SplashScreen extends GetView<SplashScreenController> {
                 ),
                 SizedBox(height: 20),
                 Text("Mengunduh Data..."),
+                SizedBox(height: 20),
+                if (controller.retryCount.value > 0)
+                  Text("Retry: ${controller.retryCount.value}",
+                      style: TextStyle(fontSize: 16, color: Colors.red)),
               ],
             );
           }
